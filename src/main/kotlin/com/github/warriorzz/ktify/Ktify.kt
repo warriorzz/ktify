@@ -17,6 +17,11 @@ import io.ktor.util.*
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
 
+/**
+ *  The main wrapper class
+ *  @param  clientCredentials   The client credentials for the Spotify API
+ *  @property   player  The [KtifyPlayer] instance
+ */
 class Ktify(
     private val clientCredentials: ClientCredentials
 ) {
@@ -93,12 +98,22 @@ class Ktify(
     }
 }
 
+/**
+ *  The builder for the [Ktify] class
+ *  @param  clientId    The client ID, provided by the spotify dashboard
+ *  @param  clientSecret    The client secret, provided by the spotify dashboard
+ *  @param  authorizationCode   returned by the request to the user (see [Server.kt] in subproject 'test')
+ *  @param  redirectUri Your redirect URI (just for confirmation)
+ */
 class KtifyBuilder(
     private val clientId: String,
     private val clientSecret: String,
     private val authorizationCode: String,
     private val redirectUri: String,
 ) {
+    /**
+     *  @return The [Ktify] instance
+     */
     @OptIn(InternalAPI::class)
     suspend fun build(): Ktify {
         val clientCredentialsResponse: ClientCredentialsResponse =

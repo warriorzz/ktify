@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.backend.wasm.lower.excludeDeclarationsFromCodegen
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -38,8 +39,15 @@ tasks {
                 jdkVersion.set(11)
                 platform.set(org.jetbrains.dokka.Platform.jvm)
 
+                perPackageOption {
+                    matchingRegex.set(".*.model.*")
+                    suppress.set(true)
+                }
                 sourceLink {
                     localDirectory.set(file("src/main/kotlin"))
+
+                    skipEmptyPackages.set(true)
+
                     remoteUrl.set(uri("https://github.com/warriorzz/ktify/tree/main/src/main/kotlin").toURL())
                     remoteLineSuffix.set("#L")
                 }

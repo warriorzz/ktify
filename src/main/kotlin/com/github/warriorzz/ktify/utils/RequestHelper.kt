@@ -20,7 +20,10 @@ internal class RequestHelper(
 
     internal val baseUrl = "https://api.spotify.com/v1/"
 
-    internal suspend inline fun <reified T> makeRequest(
+    /**
+     *  Will be internal once the entire API is covered
+     */
+    suspend inline fun <reified T> makeRequest(
         httpMethod: HttpMethod,
         url: String,
         parameters: Map<String, String>?,
@@ -50,7 +53,10 @@ internal class RequestHelper(
         }
     }
 
-    internal suspend inline fun <reified T> makeRequest(
+    /**
+     *  Will be internal once the entire API is covered
+     */
+    suspend inline fun <reified T> makeRequest(
         httpMethod: HttpMethod,
         url: String,
         parameters: Map<String, String>?,
@@ -68,7 +74,10 @@ internal class RequestHelper(
         else null
     }
 
-    internal suspend fun makeRequest(
+    /**
+     *  Will be internal once the entire API is covered
+     */
+    suspend fun makeRequest(
         httpMethod: HttpMethod,
         url: String,
         parameters: Map<String, String>?,

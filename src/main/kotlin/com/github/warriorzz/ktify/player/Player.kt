@@ -12,7 +12,12 @@ import kotlinx.serialization.json.*
 @OptIn(ExperimentalStdlibApi::class)
 class KtifyPlayer internal constructor(val ktify: Ktify) {
 
-    suspend fun getCurrentPlayback(market: String? = null, additionalTypes: String? = null): CurrentPlayback? {
+    /**
+     *  Read the user's current playback.
+     *  @param  market  (Optional) [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code of a country. Can also be 'from_token', equivalent to the current users country.
+     *  @return The [CurrentPlayback](https://github.com/warriorzz/ktify/blob/ac318a38f72f770893f2c4c9cf64dc18a2e05a86/src/main/kotlin/com/github/warriorzz/ktify/model/player/CurrentPlayback.kt#L16) object, can be null if nothing is currently played
+     */
+    suspend fun getCurrentPlayback(market: String? = null): CurrentPlayback? {
         if (ktify.requestHelper.makeRequest(
                 httpMethod = HttpMethod.Get,
                 url = ktify.requestHelper.baseUrl + "me/player",
@@ -20,9 +25,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                     if (market != null) {
                         "market" to market
                     }
-                    if (additionalTypes != null) {
-                        "additional_types" to additionalTypes
-                    }
+                    "additional_types" to "track" // TODO: Add episode
                 },
                 headers = null,
                 body = null,
@@ -38,9 +41,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                 if (market != null) {
                     "market" to market
                 }
-                if (additionalTypes != null) {
-                    "additional_types" to additionalTypes
-                }
+                "additional_types" to "track" // TODO: Add episode
             },
             headers = null,
             neededElement = "is_playing",
@@ -48,6 +49,12 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         )
     }
 
+    /**
+     *  Transfer playback to another device
+     *  @param  deviceId    The ID of the device to which the playback should be transferred
+     *  @param  play        If true, the playback will start, if false or not provided, the current playback state will be kept
+     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     */
     suspend fun transferPlayback(deviceId: String, play: Boolean = false): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
             httpMethod = HttpMethod.Put,
@@ -61,6 +68,10 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         )
     }
 
+    /**
+     *  Get a list of the available devices
+     *  @return The [AvailableDevices](https://github.com/warriorzz/ktify/blob/ac318a38f72f770893f2c4c9cf64dc18a2e05a86/src/main/kotlin/com/github/warriorzz/ktify/model/player/Devices.kt#L7) object
+     */
     suspend fun getAvailableDevices(): AvailableDevices {
         return ktify.requestHelper.makeRequest(
             httpMethod = HttpMethod.Get,
@@ -72,17 +83,18 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         )
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    suspend fun getCurrentPlayingTrack(market: String? = null, additionalTypes: String? = null): CurrentPlayingTrack? {
+    /**
+     *  Get the track currently played on the user's account
+     *  @param  market  (Optional) [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code of a country. Can also be 'from_token', equivalent to the current users country.
+     *  @return The [CurrentPlayingTrack](https://github.com/warriorzz/ktify/blob/ac318a38f72f770893f2c4c9cf64dc18a2e05a86/src/main/kotlin/com/github/warriorzz/ktify/model/player/CurrentPlayback.kt#L38) object, can be null if no track is currently played
+     */
+    suspend fun getCurrentPlayingTrack(market: String? = null): CurrentPlayingTrack? {
         return ktify.requestHelper.makeRequest(
             httpMethod = HttpMethod.Get,
             url = ktify.requestHelper.baseUrl + "me/player/currently-playing",
             parameters = buildMap {
                 if (market != null) {
                     "market" to market
-                }
-                if (additionalTypes != null) {
-                    "additional_types" to additionalTypes
                 }
             },
             headers = null,
@@ -92,6 +104,11 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         )
     }
 
+    /**
+     *  Start or resume the user's playback
+     *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
+     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     */
     suspend fun resumePlayback(
         deviceId: String? = null,
         contextUri: String? = null,
