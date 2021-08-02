@@ -1,4 +1,4 @@
-package com.github.warriorzz.ktify.extensions
+package com.github.warriorzz.ktify.utils
 
 import java.util.*
 

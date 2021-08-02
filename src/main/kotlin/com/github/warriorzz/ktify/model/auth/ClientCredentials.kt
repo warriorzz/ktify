@@ -1,7 +1,7 @@
 package com.github.warriorzz.ktify.model.auth
 
 import com.github.warriorzz.ktify.Ktify
-import com.github.warriorzz.ktify.extensions.base64encode
+import com.github.warriorzz.ktify.utils.base64encode
 import io.ktor.client.request.*
 import io.ktor.util.*
 import kotlinx.serialization.SerialName
