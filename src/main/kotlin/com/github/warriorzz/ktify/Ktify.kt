@@ -69,32 +69,7 @@ class Ktify(
         /**
          *  Will be internal once the entire API is covered
          */
-        val jsonLessHttpClient = HttpClient(httpClient.engine) {
-            HttpResponseValidator {
-                validateResponse { httpResponse ->
-                    if (httpResponse.status.value >= 400) {
-                        val jsonObject = httpResponse.receive<JsonObject>()
-                        if (jsonObject["message"] != null) {
-                            val errorObject = kotlinx.serialization.json.Json.decodeFromJsonElement(
-                                ErrorObject.serializer(),
-                                jsonObject
-                            )
-                            throw RequestException("Request failed!", errorObject)
-                        }
-                        if (jsonObject["error"] != null) {
-                            val errorObject = kotlinx.serialization.json.Json.decodeFromJsonElement(
-                                AuthenticationErrorObject.serializer(),
-                                jsonObject
-                            )
-                            throw AuthenticationException("Authentication failed!", errorObject)
-                        }
-                    }
-                }
-                handleResponseException {
-                    it.printStackTrace()
-                }
-            }
-        }
+        val jsonLessHttpClient = HttpClient(httpClient.engine)
     }
 }
 
