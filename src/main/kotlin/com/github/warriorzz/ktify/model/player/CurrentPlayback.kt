@@ -85,6 +85,18 @@ object CurrentPlaybackSerializer : JsonContentPolymorphicSerializer<CurrentPlayb
 
 }
 
+@Serializable
+enum class RepeatState {
+    @SerialName("track")
+    TRACK,
+
+    @SerialName("context")
+    CONTEXT,
+
+    @SerialName("off")
+    OFF,
+}
+
 object AnyAsEmptyStringSerializer : KSerializer<Any> {
     override fun deserialize(decoder: Decoder): Any {
         return ""
