@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
-data class CurrentProfile(
+data class CurrentUser(
     val country: String? = null,
     @SerialName("display_name")
     val displayName: String,
@@ -26,4 +26,16 @@ data class CurrentProfile(
     val uri: String
 )
 
-// TODO: other profiles
+@Serializable
+data class PublicUser(
+    @SerialName("display_name")
+    val displayName: String,
+    @SerialName("external_urls")
+    val externalUrl: ExternalUrl,
+    val followers: Followers,
+    val href: String,
+    val id: String,
+    val images: List<Image>,
+    val type: ObjectType = ObjectType.USER,
+    val uri: String
+)
