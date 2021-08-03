@@ -12,7 +12,7 @@ repositories {
 dependencies {
     implementation(project(":"))
 
-    implementation(platform("io.ktor:ktor-bom:1.6.1"))
+    implementation(platform("io.ktor:ktor-bom:1.6.2"))
     implementation("io.ktor", "ktor-server-core")
     implementation("io.ktor", "ktor-server-cio")
     implementation("io.ktor", "ktor-serialization")
