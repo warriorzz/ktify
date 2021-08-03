@@ -1,4 +1,4 @@
-package com.github.warriorzz.ktify.model.user
+package com.github.warriorzz.ktify.model
 
 import com.github.warriorzz.ktify.model.external.ExternalUrl
 import com.github.warriorzz.ktify.model.util.Image
@@ -38,4 +38,10 @@ data class PublicUser(
     val images: List<Image>,
     val type: ObjectType = ObjectType.USER,
     val uri: String
+)
+
+@Serializable
+data class Followers(
+    val href: String? = null,
+    val total: Int // TODO?
 )

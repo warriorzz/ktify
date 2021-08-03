@@ -1,8 +1,8 @@
 package com.github.warriorzz.ktify.user
 
 import com.github.warriorzz.ktify.Ktify
-import com.github.warriorzz.ktify.model.user.CurrentUser
-import com.github.warriorzz.ktify.model.user.PublicUser
+import com.github.warriorzz.ktify.model.CurrentUser
+import com.github.warriorzz.ktify.model.PublicUser
 import io.ktor.http.*
 
 /**
