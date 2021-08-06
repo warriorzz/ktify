@@ -2,6 +2,7 @@ $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:com.github.warriorzz.ktify.player////PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/index.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer///PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/index.html
+$dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/addItemToQueue/#com.github.warriorzz.ktify.model.Episode#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/add-item-to-queue.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/addItemToQueue/#com.github.warriorzz.ktify.model.LinkedTrack#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/add-item-to-queue.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/addItemToQueue/#com.github.warriorzz.ktify.model.Track#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/add-item-to-queue.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/addItemToQueue/#kotlin.String#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/add-item-to-queue.html
