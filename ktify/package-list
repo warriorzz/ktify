@@ -1,7 +1,5 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
-$dokka.location:com.github.warriorzz.ktify.extensions////PointingToDeclaration/ktify/com.github.warriorzz.ktify.extensions/index.html
-$dokka.location:com.github.warriorzz.ktify.extensions//base64encode/kotlin.String#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.extensions/base64encode.html
 $dokka.location:com.github.warriorzz.ktify.player////PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/index.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer///PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/index.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/addItemToQueue/#com.github.warriorzz.ktify.model.LinkedTrack#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/add-item-to-queue.html
@@ -21,9 +19,40 @@ $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/skipToPreviousTrac
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/startPlayback/#kotlin.String?#kotlin.String?#kotlin.collections.List[kotlin.String]?#kotlinx.serialization.json.JsonObject?#kotlin.Int?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/start-playback.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/toggleShufflePlayback/#kotlin.Boolean#kotlin.String?/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/toggle-shuffle-playback.html
 $dokka.location:com.github.warriorzz.ktify.player/KtifyPlayer/transferPlayback/#kotlin.String#kotlin.Boolean/PointingToDeclaration/ktify/com.github.warriorzz.ktify.player/-ktify-player/transfer-playback.html
+$dokka.location:com.github.warriorzz.ktify.search////PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/index.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.EmptyPhrase#com.github.warriorzz.ktify.search.EmptyPhrase/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.EmptyPhrase#com.github.warriorzz.ktify.search.Phrase/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.EmptyPhrase#kotlin.String/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.Phrase#com.github.warriorzz.ktify.search.EmptyPhrase/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.Phrase#com.github.warriorzz.ktify.search.Phrase/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//plus/com.github.warriorzz.ktify.search.Phrase#kotlin.String/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/plus.html
+$dokka.location:com.github.warriorzz.ktify.search//searchItem/com.github.warriorzz.ktify.Ktify#kotlin.collections.List[com.github.warriorzz.ktify.model.util.ObjectType]#kotlin.Int#kotlin.Int#kotlin.Boolean?#kotlin.String?#kotlin.Function1[com.github.warriorzz.ktify.search.SearchQueueBuilder,kotlin.Unit]/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/search-item.html
+$dokka.location:com.github.warriorzz.ktify.search/EmptyPhrase///PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-empty-phrase/index.html
+$dokka.location:com.github.warriorzz.ktify.search/EmptyPhrase/EmptyPhrase/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-empty-phrase/-empty-phrase.html
+$dokka.location:com.github.warriorzz.ktify.search/Phrase///PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-phrase/index.html
+$dokka.location:com.github.warriorzz.ktify.search/Phrase/Phrase/#kotlin.String#kotlin.Boolean/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-phrase/-phrase.html
+$dokka.location:com.github.warriorzz.ktify.search/Phrase/not/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-phrase/not.html
+$dokka.location:com.github.warriorzz.ktify.search/Phrase/toString/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-phrase/to-string.html
+$dokka.location:com.github.warriorzz.ktify.search/Phrase/value/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-phrase/value.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder///PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/index.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/SearchQueueBuilder/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/-search-queue-builder.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/album/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/album.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/artist/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/artist.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/genre/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/genre.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/hipsterAlbumsOnly/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/hipster-albums-only.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/keywords/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/keywords.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/newAlbumsOnly/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/new-albums-only.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/notKeywords/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/not-keywords.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/track/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/track.html
+$dokka.location:com.github.warriorzz.ktify.search/SearchQueueBuilder/years/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-search-queue-builder/years.html
+$dokka.location:com.github.warriorzz.ktify.search/YearPhase///PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-year-phase/index.html
+$dokka.location:com.github.warriorzz.ktify.search/YearPhase/YearPhase/#kotlin.Int#kotlin.Int/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-year-phase/-year-phase.html
+$dokka.location:com.github.warriorzz.ktify.search/YearPhase/YearPhase/#kotlin.Int/PointingToDeclaration/ktify/com.github.warriorzz.ktify.search/-year-phase/-year-phase.html
 $dokka.location:com.github.warriorzz.ktify.user////PointingToDeclaration/ktify/com.github.warriorzz.ktify.user/index.html
 $dokka.location:com.github.warriorzz.ktify.user//getCurrentProfile/com.github.warriorzz.ktify.Ktify#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.user/get-current-profile.html
+$dokka.location:com.github.warriorzz.ktify.user//getUserProfile/com.github.warriorzz.ktify.Ktify#kotlin.String/PointingToDeclaration/ktify/com.github.warriorzz.ktify.user/get-user-profile.html
 $dokka.location:com.github.warriorzz.ktify.utils////PointingToDeclaration/ktify/com.github.warriorzz.ktify.utils/index.html
+$dokka.location:com.github.warriorzz.ktify.utils//base64encode/kotlin.String#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.utils/base64encode.html
 $dokka.location:com.github.warriorzz.ktify.utils/AuthenticationErrorObject///PointingToDeclaration/ktify/com.github.warriorzz.ktify.utils/-authentication-error-object/index.html
 $dokka.location:com.github.warriorzz.ktify.utils/AuthenticationErrorObject/AuthenticationErrorObject/#kotlin.String#kotlin.String/PointingToDeclaration/ktify/com.github.warriorzz.ktify.utils/-authentication-error-object/-authentication-error-object.html
 $dokka.location:com.github.warriorzz.ktify.utils/AuthenticationErrorObject/error/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify.utils/-authentication-error-object/error.html
@@ -55,8 +84,8 @@ $dokka.location:com.github.warriorzz.ktify/KtifyBuilder///PointingToDeclaration/
 $dokka.location:com.github.warriorzz.ktify/KtifyBuilder/KtifyBuilder/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/ktify/com.github.warriorzz.ktify/-ktify-builder/-ktify-builder.html
 $dokka.location:com.github.warriorzz.ktify/KtifyBuilder/build/#/PointingToDeclaration/ktify/com.github.warriorzz.ktify/-ktify-builder/build.html
 com.github.warriorzz.ktify
-com.github.warriorzz.ktify.extensions
 com.github.warriorzz.ktify.player
+com.github.warriorzz.ktify.search
 com.github.warriorzz.ktify.user
 com.github.warriorzz.ktify.utils
 
