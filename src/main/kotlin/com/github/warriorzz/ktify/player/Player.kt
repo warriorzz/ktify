@@ -391,7 +391,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     suspend fun addItemToQueue(track: LinkedTrack, deviceId: String?) = addItemToQueue(track.uri, deviceId)
 
     /**
-     *  Adds a track to the user's queue
+     *  Adds an episode to the user's queue
      *  @param  episode   The episode to add to the queue
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
      *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium

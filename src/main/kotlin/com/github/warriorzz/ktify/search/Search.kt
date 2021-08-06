@@ -48,7 +48,7 @@ suspend fun Ktify.searchItem(
 }
 
 /**
- *  The builder for the search queue
+ *  The builder for the search queue, for further reference, take a look [here](https://developer.spotify.com/documentation/web-api/reference/#category-search)
  */
 class SearchQueueBuilder {
 
@@ -87,9 +87,19 @@ class SearchQueueBuilder {
      */
     var years: YearPhase? = null
 
+    /**
+     *  If only albums with the lowest 10% popularity should be retrieved
+     */
     var hipsterAlbumsOnly: Boolean = false
+
+    /**
+     *  If only albums released in the last two weeks should be retrieved
+     */
     var newAlbumsOnly: Boolean = false
 
+    /**
+     *  The method for building the search queue
+     */
     internal fun build(): Phrase {
         val keywordPhrase = if (keywords.isNotEmpty()) {
             keywords.reduce { acc, phrase -> acc + phrase }
@@ -134,6 +144,9 @@ open class Phrase(val value: String, private val explicit: Boolean = false) {
     override fun toString(): String = if (explicit) "($value)" else value
 }
 
+/**
+ *  The class representing an empty phrase
+ */
 class EmptyPhrase : Phrase("")
 
 operator fun Phrase.plus(value: String) = Phrase("$this $value")
