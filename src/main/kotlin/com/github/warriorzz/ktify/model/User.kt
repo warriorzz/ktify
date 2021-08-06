@@ -5,7 +5,6 @@ import com.github.warriorzz.ktify.model.util.Image
 import com.github.warriorzz.ktify.model.util.ObjectType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
 
 @Serializable
 data class CurrentUser(
@@ -14,7 +13,7 @@ data class CurrentUser(
     val displayName: String,
     val email: String? = null,
     @SerialName("explicit_content")
-    val explicitContent: JsonObject? = null, // TODO
+    val explicitContent: ExplicitContentSettings? = null,
     @SerialName("external_urls")
     val externalUrl: ExternalUrl,
     val followers: Followers,
@@ -49,6 +48,14 @@ data class UserPagingObject(
     val offset: Int,
     val previous: String? = null,
     val total: Int,
+)
+
+@Serializable
+data class ExplicitContentSettings(
+    @SerialName("filter_enabled")
+    val filterEnabled: Boolean,
+    @SerialName("filter_locked")
+    val filterLocked: Boolean,
 )
 
 @Serializable
