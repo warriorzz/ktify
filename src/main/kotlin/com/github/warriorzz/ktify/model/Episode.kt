@@ -12,6 +12,8 @@ class Episode(
     @SerialName("audio_preview_url")
     val audioPreviewUrl: String? = null,
     val description: String,
+    @SerialName("duration_ms")
+    val durationMs: Long,
     val explicit: Boolean,
     @SerialName("external_urls")
     val externalUrl: ExternalUrl,
@@ -21,7 +23,7 @@ class Episode(
     val id: String,
     val images: List<Image>,
     @SerialName("is_externally_hosted")
-    val isExternalHosted: Boolean,
+    val isExternallyHosted: Boolean,
     @SerialName("is_playable")
     val isPlayable: Boolean,
     val languages: List<String>,
@@ -47,6 +49,13 @@ data class EpisodePagingObject(
     val offset: Int,
     val previous: String? = null,
     val total: Int,
+)
+
+@Serializable
+data class SavedEpisodeObject(
+    @SerialName("added_at")
+    val addedAt: String,
+    val episode: Episode,
 )
 
 @Serializable
