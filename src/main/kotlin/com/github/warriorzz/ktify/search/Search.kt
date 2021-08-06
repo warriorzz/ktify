@@ -83,7 +83,7 @@ class SearchQueueBuilder {
     var track: String? = null
 
     /**
-     *  The years in which the album should be TODO?
+     *  The years in which the album should be
      */
     var years: YearPhase? = null
 

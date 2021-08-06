@@ -30,6 +30,9 @@ enum class ObjectType {
     @SerialName("track")
     TRACK,
 
+    @SerialName("episode")
+    EPISODE,
+
     @SerialName("user")
     USER,
 }

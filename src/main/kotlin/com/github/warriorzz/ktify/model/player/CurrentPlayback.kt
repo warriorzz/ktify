@@ -1,5 +1,6 @@
 package com.github.warriorzz.ktify.model.player
 
+import com.github.warriorzz.ktify.model.Episode
 import com.github.warriorzz.ktify.model.Track
 import com.github.warriorzz.ktify.model.TrackActions
 import com.github.warriorzz.ktify.model.util.Context
@@ -54,7 +55,26 @@ class CurrentPlayingTrack(
     val resuming: Boolean? = null
 ) : CurrentPlayback()
 
-// TODO: Episode
+
+@Serializable
+class CurrentPlayingEpisode(
+    override val timestamp: Long,
+    @SerialName("progress_ms")
+    override val progressMs: Long,
+    override val device: Device? = null,
+    @SerialName("is_playing")
+    override val isPlaying: Boolean,
+    @SerialName("currently_playing_type")
+    override val currentlyPlayingType: String,
+    @SerialName("shuffle_state")
+    override val shuffleState: Boolean? = null,
+    @SerialName("repeat_state")
+    override val repeatState: String? = null,
+    override val context: Context?,
+    val item: Episode? = null,
+    val actions: TrackActions,
+    val resuming: Boolean? = null
+) : CurrentPlayback()
 
 @Serializable
 class CurrentPlaybackNull(
@@ -79,10 +99,10 @@ object CurrentPlaybackSerializer : JsonContentPolymorphicSerializer<CurrentPlayb
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out CurrentPlayback> {
         return when (element.jsonObject["item"]?.jsonObject?.get("type")?.jsonPrimitive?.content) {
             "track" -> CurrentPlayingTrack.serializer()
+            "episode" -> CurrentPlayingEpisode.serializer()
             else -> CurrentPlaybackNull.serializer()
         }
     }
-
 }
 
 @Serializable

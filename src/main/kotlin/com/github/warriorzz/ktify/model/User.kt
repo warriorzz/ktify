@@ -54,5 +54,5 @@ data class UserPagingObject(
 @Serializable
 data class Followers(
     val href: String? = null,
-    val total: Int // TODO?
+    val total: Int
 )

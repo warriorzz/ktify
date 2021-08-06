@@ -1,6 +1,7 @@
 package com.github.warriorzz.ktify.player
 
 import com.github.warriorzz.ktify.Ktify
+import com.github.warriorzz.ktify.model.Episode
 import com.github.warriorzz.ktify.model.LinkedTrack
 import com.github.warriorzz.ktify.model.Track
 import com.github.warriorzz.ktify.model.auth.Scope
@@ -24,7 +25,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                     if (market != null) {
                         put("market", market)
                     }
-                    put("additional_types", "track") // TODO: Add episode
+                    put("additional_types", "track,episode")
                 },
                 headers = null,
                 body = null,
@@ -40,7 +41,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                 if (market != null) {
                     put("market", market)
                 }
-                put("additional_types", "track") // TODO: Add episode
+                put("additional_types", "track,episode")
             },
             headers = null,
             neededElement = "is_playing",
@@ -388,5 +389,12 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun addItemToQueue(track: LinkedTrack, deviceId: String?) = addItemToQueue(track.uri, deviceId)
-    // TODO: Episode
+
+    /**
+     *  Adds a track to the user's queue
+     *  @param  episode   The episode to add to the queue
+     *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
+     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     */
+    suspend fun addItemToQueue(episode: Episode, deviceId: String?) = addItemToQueue(episode.uri, deviceId)
 }

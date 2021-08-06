@@ -7,7 +7,7 @@ import kotlinx.serialization.json.JsonObject
 @Serializable
 data class SearchResult(
     val tracks: TrackPagingObject? = null,
-    val episodes: JsonObject? = null, // TODO
+    val episodes: EpisodePagingObject? = null,
     val albums: AlbumPagingObject? = null,
     val artists: ArtistPagingObject? = null,
     val shows: JsonObject? = null, // TODO
