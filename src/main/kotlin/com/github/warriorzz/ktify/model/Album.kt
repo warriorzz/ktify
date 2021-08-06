@@ -6,6 +6,7 @@ import com.github.warriorzz.ktify.model.util.Image
 import com.github.warriorzz.ktify.model.util.ObjectType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
 /**
  *  The album object of the <a href=https://developer.spotify.com/documentation/web-api/reference/#object-albumobject>Spotify Web API</a>.
@@ -40,8 +41,19 @@ data class Album(
     @SerialName("total_tracks")
     val totalTracks: Int,
     val tracks: List<Track>? = null,
-    val type: ObjectType = ObjectType.ALBUM,
+    override val type: ObjectType = ObjectType.ALBUM,
     val uri: String,
+) : KtifyObject()
+
+@Serializable
+data class AlbumPagingObject(
+    val href: String,
+    val items: List<Album>,
+    val limit: Int,
+    val next: String? = null,
+    val offset: Int,
+    val previous: String? = null,
+    val total: Int,
 )
 
 @Serializable

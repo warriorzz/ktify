@@ -1,7 +1,6 @@
 package com.github.warriorzz.ktify.model
 
 import com.github.warriorzz.ktify.model.external.ExternalUrl
-import com.github.warriorzz.ktify.model.user.Followers
 import com.github.warriorzz.ktify.model.util.Image
 import com.github.warriorzz.ktify.model.util.ObjectType
 import kotlinx.serialization.SerialName
@@ -22,6 +21,18 @@ data class Artist(
     val images: List<Image>? = null,
     val name: String,
     val popularity: Int? = null,
-    val type: ObjectType = ObjectType.ARTIST,
+    override val type: ObjectType = ObjectType.ARTIST,
     val uri: String,
+) : KtifyObject()
+
+
+@Serializable
+data class ArtistPagingObject(
+    val href: String,
+    val items: List<Artist>,
+    val limit: Int,
+    val next: String? = null,
+    val offset: Int,
+    val previous: String? = null,
+    val total: Int,
 )

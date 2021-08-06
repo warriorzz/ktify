@@ -5,13 +5,14 @@ import com.github.warriorzz.ktify.model.external.ExternalUrl
 import com.github.warriorzz.ktify.model.util.ObjectType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
 /**
  *  The album object of the <a href=https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject>Spotify Web API</a>.
  *  @see <a href=https://developer.spotify.com/documentation/web-api/reference/#object-trackobject>Spotify reference</a>
  */
 @Serializable
-data class Track(
+class Track(
     val album: Album? = null,
     val artists: List<Artist>,
     @SerialName("available_markets")
@@ -40,9 +41,9 @@ data class Track(
     val restrictions: TrackRestriction? = null,
     @SerialName("track_number")
     val trackNumber: Int,
-    val type: ObjectType = ObjectType.TRACK,
+    override val type: ObjectType = ObjectType.TRACK,
     val uri: String,
-)
+) : KtifyObject()
 
 @Serializable
 data class LinkedTrack(
@@ -79,6 +80,17 @@ data class SavedTrack(
     @SerialName("added_at")
     val addedAt: String,
     val track: Track,
+)
+
+@Serializable
+data class TrackPagingObject(
+    val href: String,
+    val items: List<Track>,
+    val limit: Int,
+    val next: String? = null,
+    val offset: Int,
+    val previous: String? = null,
+    val total: Int,
 )
 
 @Serializable

@@ -36,8 +36,19 @@ data class PublicUser(
     val href: String,
     val id: String,
     val images: List<Image>,
-    val type: ObjectType = ObjectType.USER,
+    override val type: ObjectType = ObjectType.USER,
     val uri: String
+) : KtifyObject()
+
+@Serializable
+data class UserPagingObject(
+    val href: String,
+    val items: List<PublicUser>,
+    val limit: Int,
+    val next: String? = null,
+    val offset: Int,
+    val previous: String? = null,
+    val total: Int,
 )
 
 @Serializable
