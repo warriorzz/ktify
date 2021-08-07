@@ -61,6 +61,7 @@ ktlint {
     filter {
         disabledRules.add("no-wildcard-imports")
         disabledRules.add("no-multi-spaces")
+        disabledRules.add("indent")
 
         exclude("**/build/**")
     }
