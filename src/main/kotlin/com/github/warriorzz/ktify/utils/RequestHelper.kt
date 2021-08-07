@@ -13,13 +13,16 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
 internal class RequestHelper(
-    private val clientCredentials: ClientCredentials
+    private val clientCredentials: ClientCredentials,
+    private val ktify: Ktify
 ) {
 
     internal val baseUrl = "https://api.spotify.com/v1/"
+    internal var rateLimitExpiryTimestamp: Long? = null
 
     /**
      *  Will be internal once the entire API is covered
+     *  @throws RateLimitException  If the client is rate limited, check with [isRateLimited]
      */
     suspend inline fun <reified T> makeRequest(
         httpMethod: HttpMethod,
@@ -29,8 +32,12 @@ internal class RequestHelper(
         body: JsonObject? = null,
         requiresAuthentication: Boolean = true,
         requiresScope: Scope? = null,
-        client: HttpClient = Ktify.httpClient,
+        client: HttpClient = ktify.httpClient,
     ): T {
+        if (isRateLimited()) {
+            val retryAfter = rateLimitExpiryTimestamp!! - System.currentTimeMillis()
+            throw RateLimitException("Too many requests - Retry after $retryAfter ms", retryAfter)
+        }
         requiresScope?.let { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         return client.request {
             url(url)
@@ -65,6 +72,12 @@ internal class RequestHelper(
         neededElement: String,
         deserializationStrategy: DeserializationStrategy<T>
     ): T? {
+        if (isRateLimited()) {
+            ktify.logger.error {
+                "Client is currently rate limited! Retry after ${rateLimitExpiryTimestamp!! - System.currentTimeMillis()}ms"
+            }
+            return null
+        }
         requiresScope?.let { if (clientCredentials.scopes?.contains(requiresScope) == false) return null }
         val jsonObject: JsonObject = makeRequest(httpMethod, url, parameters, headers, body, requiresAuthentication)
         return if (jsonObject.containsKey(neededElement))
@@ -83,9 +96,20 @@ internal class RequestHelper(
         body: JsonObject? = null,
         requiresScope: Scope? = null,
     ): HttpStatusCode {
+        if (isRateLimited()) {
+            return HttpStatusCode.TooManyRequests
+        }
         requiresScope?.let { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         val responseData: HttpResponse =
-            makeRequest(httpMethod, url, parameters, headers, body, true, requiresScope, Ktify.jsonLessHttpClient)
+            makeRequest(httpMethod, url, parameters, headers, body, true, requiresScope, ktify.jsonLessHttpClient)
         return responseData.status
     }
+
+    /**
+     *  Checks if the client is currently rate limited
+     *  @return true if the client is rate limited
+     */
+    fun isRateLimited(): Boolean = rateLimitExpiryTimestamp?.let {
+        it > System.currentTimeMillis()
+    } ?: false
 }

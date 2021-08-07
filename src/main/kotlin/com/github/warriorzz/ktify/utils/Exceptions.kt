@@ -10,11 +10,13 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.lang.RuntimeException
 
-class RequestException(override val message: String? = "Unauthorized", val error: ErrorObject) :
+class RequestException(override val message: String = "Unauthorized", val error: ErrorObject) :
     RuntimeException(message)
 
 class AuthenticationException(override val message: String, val error: AuthenticationErrorObject) :
     RuntimeException(message)
+
+class RateLimitException(override val message: String = "Too many requests", val retryAfterMs: Long) : RuntimeException(message)
 
 @Serializable
 data class ErrorObject(
