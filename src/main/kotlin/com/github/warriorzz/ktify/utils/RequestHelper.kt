@@ -38,7 +38,7 @@ internal class RequestHelper(
             val retryAfter = rateLimitExpiryTimestamp!! - System.currentTimeMillis()
             throw RateLimitException("Too many requests - Retry after $retryAfter ms", retryAfter)
         }
-        requiresScope?.let { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
+        if (requiresScope != null) { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         return client.request {
             url(url)
             parameters?.forEach {
@@ -47,7 +47,7 @@ internal class RequestHelper(
             headers?.forEach {
                 header(it.key, it.value)
             }
-            body?.let {
+            if (body != null) {
                 this.body = body
             }
             clientCredentials.refresh()
@@ -78,7 +78,7 @@ internal class RequestHelper(
             }
             return null
         }
-        requiresScope?.let { if (clientCredentials.scopes?.contains(requiresScope) == false) return null }
+        if (requiresScope != null) { if (clientCredentials.scopes?.contains(requiresScope) == false) return null }
         val jsonObject: JsonObject = makeRequest(httpMethod, url, parameters, headers, body, requiresAuthentication)
         return if (jsonObject.containsKey(neededElement))
             Json.decodeFromJsonElement(deserializationStrategy, jsonObject)
@@ -99,7 +99,7 @@ internal class RequestHelper(
         if (isRateLimited()) {
             return HttpStatusCode.TooManyRequests
         }
-        requiresScope?.let { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
+        if (requiresScope != null) { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         val responseData: HttpResponse =
             makeRequest(httpMethod, url, parameters, headers, body, true, requiresScope, ktify.jsonLessHttpClient)
         return responseData.status

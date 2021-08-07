@@ -120,16 +120,16 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             httpMethod = HttpMethod.Put,
             url = ktify.requestHelper.baseUrl + "me/player/play",
             parameters = buildMap {
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
             headers = null,
             body = buildJsonObject {
-                contextUri?.let {
+                if (contextUri != null) {
                     put("context_uri", contextUri)
                 }
-                uris?.let {
+                if (uris != null) {
                     put(
                         "uris",
                         buildJsonArray {
@@ -137,10 +137,10 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                         }
                     )
                 }
-                offset?.let {
+                if (offset != null) {
                     put("offset", offset)
                 }
-                positionMs?.let {
+                if (positionMs != null) {
                     put("position_ms", positionMs)
                 }
             },
@@ -158,7 +158,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             httpMethod = HttpMethod.Put,
             url = ktify.requestHelper.baseUrl + "me/player/pause",
             parameters = buildMap {
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -178,7 +178,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             httpMethod = HttpMethod.Post,
             url = ktify.requestHelper.baseUrl + "me/player/next",
             parameters = buildMap {
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -198,7 +198,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             httpMethod = HttpMethod.Post,
             url = ktify.requestHelper.baseUrl + "me/player/previous",
             parameters = buildMap {
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -220,7 +220,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             url = ktify.requestHelper.baseUrl + "me/player/seek",
             parameters = buildMap {
                 put("position_ms", positionMs.toString())
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -242,7 +242,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             url = ktify.requestHelper.baseUrl + "me/player/repeat",
             parameters = buildMap {
                 put("state", Json.encodeToString(RepeatState.serializer(), repeatState).replace("\"", ""))
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -267,7 +267,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             url = ktify.requestHelper.baseUrl + "me/player/volume",
             parameters = buildMap {
                 put("volume_percent", volumePercent.toString())
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -289,7 +289,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             url = ktify.requestHelper.baseUrl + "me/player/shuffle",
             parameters = buildMap {
                 put("state", shuffleState.toString())
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
@@ -318,14 +318,13 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                 httpMethod = HttpMethod.Get,
                 url = ktify.requestHelper.baseUrl + "me/player/recently-played",
                 parameters = buildMap {
-                    limit?.let {
-                        if (it in 1..50)
-                            put("limit", limit.toString())
+                    if (limit != null && limit in 1..50) {
+                        put("limit", limit.toString())
                     }
-                    after?.let {
+                    if (after != null) {
                         put("after", after.toString())
                     }
-                    before?.let {
+                    if (before != null) {
                         put("before", before.toString())
                     }
                 },
@@ -340,14 +339,13 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             httpMethod = HttpMethod.Get,
             url = ktify.requestHelper.baseUrl + "me/player/recently-played",
             parameters = buildMap {
-                limit?.let {
-                    if (it in 1..50)
-                        put("limit", limit.toString())
+                if (limit != null && limit in 1..50) {
+                    put("limit", limit.toString())
                 }
-                after?.let {
+                if (after != null) {
                     put("after", after.toString())
                 }
-                before?.let {
+                if (before != null) {
                     put("before", before.toString())
                 }
             },
@@ -367,7 +365,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             url = ktify.requestHelper.baseUrl + "me/player/queue",
             parameters = buildMap {
                 put("uri", uri)
-                deviceId?.let {
+                if (deviceId != null) {
                     put("device_id", deviceId)
                 }
             },
