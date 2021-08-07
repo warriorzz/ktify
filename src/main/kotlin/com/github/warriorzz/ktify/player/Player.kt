@@ -105,7 +105,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     }
 
     /**
-     *  Start or resume the user's playback
+     *  Start or resume the user's playback, click [here](https://developer.spotify.com/documentation/web-api/reference/#category-player) for further context
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
      *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
