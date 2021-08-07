@@ -9,12 +9,10 @@ import io.ktor.http.*
  *  Get the profile of the current profile
  *  @return The [CurrentProfile](https://github.com/warriorzz/ktify/blob/ac318a38f72f770893f2c4c9cf64dc18a2e05a86/src/main/kotlin/com/github/warriorzz/ktify/model/user/User.kt#L11) object corresponding to the current user
  */
-suspend fun Ktify.getCurrentProfile() = requestHelper.makeRequest<CurrentUser>(
-    HttpMethod.Get,
-    requestHelper.baseUrl + "me",
-    null, null,
-    null
-)
+suspend fun Ktify.getCurrentProfile() = requestHelper.makeRequest<CurrentUser>(requiresAuthentication = true) {
+    method = HttpMethod.Get
+    url.takeFrom(requestHelper.baseUrl + "me")
+}
 
 /**
  *  Get a profile of another user
@@ -22,17 +20,15 @@ suspend fun Ktify.getCurrentProfile() = requestHelper.makeRequest<CurrentUser>(
  *  @return Instance of the [PublicUser](https://github.com/warriorzz/ktify/blob/f989c569494518ce3a86c5c391c4bd09bc9bb437/src/main/kotlin/com/github/warriorzz/ktify/model/user/User.kt#L30) class, null if the user wasn't found
  */
 suspend fun Ktify.getUserProfile(userId: String): PublicUser? {
-    if (requestHelper.makeRequest(
-            HttpMethod.Get,
-            requestHelper.baseUrl + "users/$userId",
-            parameters = null, headers = null, body = null
-        ) != HttpStatusCode.OK
+    if (requestHelper.makeRequest {
+            method = HttpMethod.Get
+            url.takeFrom(requestHelper.baseUrl + "users/$userId")
+        } != HttpStatusCode.OK
     ) {
         return null
     }
-    return requestHelper.makeRequest<PublicUser>(
-        HttpMethod.Get,
-        requestHelper.baseUrl + "users/$userId",
-        parameters = null, headers = null, body = null
-    )
+    return requestHelper.makeRequest<PublicUser>(requiresAuthentication = true) {
+        method = HttpMethod.Get
+        url.takeFrom(requestHelper.baseUrl + "users/$userId")
+    }
 }

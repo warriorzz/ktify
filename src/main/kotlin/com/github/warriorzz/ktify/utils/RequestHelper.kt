@@ -25,14 +25,10 @@ internal class RequestHelper(
      *  @throws RateLimitException  If the client is rate limited, check with [isRateLimited]
      */
     suspend inline fun <reified T> makeRequest(
-        httpMethod: HttpMethod,
-        url: String,
-        parameters: Map<String, String>?,
-        headers: Map<String, String>?,
-        body: JsonObject? = null,
-        requiresAuthentication: Boolean = true,
+        requiresAuthentication: Boolean,
         requiresScope: Scope? = null,
         client: HttpClient = ktify.httpClient,
+        builder: HttpRequestBuilder.() -> Unit
     ): T {
         if (isRateLimited()) {
             val retryAfter = rateLimitExpiryTimestamp!! - System.currentTimeMillis()
@@ -40,21 +36,11 @@ internal class RequestHelper(
         }
         if (requiresScope != null) { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         return client.request {
-            url(url)
-            parameters?.forEach {
-                parameter(it.key, it.value)
-            }
-            headers?.forEach {
-                header(it.key, it.value)
-            }
-            if (body != null) {
-                this.body = body
-            }
             clientCredentials.refresh()
             if (requiresAuthentication) {
                 header("Authorization", "${clientCredentials.tokenType} ${clientCredentials.accessToken}")
             }
-            method = httpMethod
+            apply(builder)
         }
     }
 
@@ -62,15 +48,11 @@ internal class RequestHelper(
      *  Will be internal once the entire API is covered
      */
     suspend inline fun <reified T> makeRequest(
-        httpMethod: HttpMethod,
-        url: String,
-        parameters: Map<String, String>?,
-        headers: Map<String, String>?,
-        body: JsonObject? = null,
         requiresAuthentication: Boolean = true,
         requiresScope: Scope? = null,
         neededElement: String,
-        deserializationStrategy: DeserializationStrategy<T>
+        deserializationStrategy: DeserializationStrategy<T>,
+        builder: HttpRequestBuilder.() -> Unit
     ): T? {
         if (isRateLimited()) {
             ktify.logger.error {
@@ -79,7 +61,7 @@ internal class RequestHelper(
             return null
         }
         if (requiresScope != null) { if (clientCredentials.scopes?.contains(requiresScope) == false) return null }
-        val jsonObject: JsonObject = makeRequest(httpMethod, url, parameters, headers, body, requiresAuthentication)
+        val jsonObject: JsonObject = makeRequest(requiresAuthentication = requiresAuthentication, builder = builder)
         return if (jsonObject.containsKey(neededElement))
             Json.decodeFromJsonElement(deserializationStrategy, jsonObject)
         else null
@@ -88,20 +70,16 @@ internal class RequestHelper(
     /**
      *  Will be internal once the entire API is covered
      */
-    suspend fun makeRequest(
-        httpMethod: HttpMethod,
-        url: String,
-        parameters: Map<String, String>?,
-        headers: Map<String, String>?,
-        body: JsonObject? = null,
+    suspend inline fun makeRequest(
         requiresScope: Scope? = null,
+        builder: HttpRequestBuilder.() -> Unit
     ): HttpStatusCode {
         if (isRateLimited()) {
             return HttpStatusCode.TooManyRequests
         }
         if (requiresScope != null) { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         val responseData: HttpResponse =
-            makeRequest(httpMethod, url, parameters, headers, body, true, requiresScope, ktify.jsonLessHttpClient)
+            makeRequest(requiresAuthentication = true, client = ktify.jsonLessHttpClient, builder = builder)
         return responseData.status
     }
 

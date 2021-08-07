@@ -3,7 +3,8 @@ package com.github.warriorzz.ktify.search
 import com.github.warriorzz.ktify.Ktify
 import com.github.warriorzz.ktify.model.search.SearchResult
 import com.github.warriorzz.ktify.model.util.ObjectType
-import io.ktor.http.HttpMethod
+import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.serialization.json.Json
 
 /**
@@ -27,24 +28,25 @@ suspend fun Ktify.searchItem(
 ): SearchResult {
     val searchQueue = SearchQueueBuilder().apply(queue).build()
     return requestHelper.makeRequest(
-        httpMethod = HttpMethod.Get,
-        url = requestHelper.baseUrl + "search",
-        parameters = buildMap {
-            put("q", searchQueue.value)
-            put("type", types.map { Json.encodeToString(ObjectType.serializer(), it) }.reduce { acc, it -> "$acc,$it" }.replace("\"", ""))
-            put("limit", if (limit in 1..50) limit.toString() else "20")
-            put("offset", if (offset + limit <= 1000 && offset >= 0) offset.toString() else "0")
-            if (includeExternal != null) {
-                put("include_external", includeExternal.toString())
-            }
-            if (market != null) {
-                put("market", market)
-            }
-        },
-        headers = null,
-        body = null,
         requiresAuthentication = true
-    )
+    ) {
+        method = HttpMethod.Get
+        url.takeFrom(requestHelper.baseUrl + "search")
+        parameter("q", searchQueue.value)
+        parameter(
+            "type",
+            types.joinToString(separator = ",") { Json.encodeToString(ObjectType.serializer(), it) }
+                .replace("\"", "")
+        )
+        parameter("limit", if (limit in 1..50) limit.toString() else "20")
+        parameter("offset", if (offset + limit <= 1000 && offset >= 0) offset.toString() else "0")
+        if (includeExternal != null) {
+            parameter("include_external", includeExternal.toString())
+        }
+        if (market != null) {
+            parameter("market", market)
+        }
+    }
 }
 
 /**

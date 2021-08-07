@@ -6,6 +6,7 @@ import com.github.warriorzz.ktify.model.LinkedTrack
 import com.github.warriorzz.ktify.model.Track
 import com.github.warriorzz.ktify.model.auth.Scope
 import com.github.warriorzz.ktify.model.player.*
+import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.*
 
@@ -19,34 +20,29 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun getCurrentPlayback(market: String? = null): CurrentPlayback? {
         if (ktify.requestHelper.makeRequest(
-                httpMethod = HttpMethod.Get,
-                url = ktify.requestHelper.baseUrl + "me/player",
-                parameters = buildMap {
-                    if (market != null) {
-                        put("market", market)
-                    }
-                    put("additional_types", "track,episode")
-                },
-                headers = null,
-                body = null,
                 requiresScope = Scope.USER_READ_PLAYBACK_STATE
-            ) != HttpStatusCode.OK
+            ) {
+                method = HttpMethod.Get
+                url.takeFrom(ktify.requestHelper.baseUrl + "me/player")
+                if (market != null) {
+                    parameter("market", market)
+                }
+                parameter("additional_types", "track,episode")
+            } != HttpStatusCode.OK
         ) {
             return null
         }
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Get,
-            url = ktify.requestHelper.baseUrl + "me/player",
-            parameters = buildMap {
-                if (market != null) {
-                    put("market", market)
-                }
-                put("additional_types", "track,episode")
-            },
-            headers = null,
             neededElement = "is_playing",
             deserializationStrategy = CurrentPlayback.serializer()
-        )
+        ) {
+            method = HttpMethod.Get
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player")
+            if (market != null) {
+                parameter("market", market)
+            }
+            parameter("additional_types", "track,episode")
+        }
     }
 
     /**
@@ -57,15 +53,13 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun transferPlayback(deviceId: String, play: Boolean = false): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player",
-            parameters = mapOf(
-                "device_ids" to "{device_ids:[\"$deviceId\"]}",
-                "play" to play.toString()
-            ),
-            headers = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player")
+            parameter("device_ids", "{device_ids:[\"$deviceId\"]}")
+            parameter("play", play.toString())
+        }
     }
 
     /**
@@ -74,13 +68,12 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun getAvailableDevices(): AvailableDevices {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Get,
-            url = ktify.requestHelper.baseUrl + "me/player/devices",
-            parameters = null,
-            headers = null,
             requiresAuthentication = true,
             requiresScope = Scope.USER_READ_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Get
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/devices")
+        }
     }
 
     /**
@@ -90,18 +83,16 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun getCurrentPlayingTrack(market: String? = null): CurrentPlayingTrack? {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Get,
-            url = ktify.requestHelper.baseUrl + "me/player/currently-playing",
-            parameters = buildMap {
-                if (market != null) {
-                    put("market", market)
-                }
-            },
-            headers = null,
             neededElement = "is_playing",
             deserializationStrategy = CurrentPlayingTrack.serializer(),
             requiresScope = Scope.USER_READ_CURRENTLY_PLAYING
-        )
+        ) {
+            method = HttpMethod.Get
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/currently-playing")
+            if (market != null) {
+                parameter("market", market)
+            }
+        }
     }
 
     /**
@@ -117,14 +108,13 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         positionMs: Int? = null
     ): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/play",
-            parameters = buildMap {
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
+            requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/play")
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
             body = buildJsonObject {
                 if (contextUri != null) {
                     put("context_uri", contextUri)
@@ -143,9 +133,8 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                 if (positionMs != null) {
                     put("position_ms", positionMs)
                 }
-            },
-            requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+            }
+        }
     }
 
     /**
@@ -155,17 +144,14 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun pausePlayback(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/pause",
-            parameters = buildMap {
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/pause")
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -175,17 +161,14 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun skipToNextTrack(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Post,
-            url = ktify.requestHelper.baseUrl + "me/player/next",
-            parameters = buildMap {
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Post
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/next")
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -195,17 +178,14 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun skipToPreviousTrack(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Post,
-            url = ktify.requestHelper.baseUrl + "me/player/previous",
-            parameters = buildMap {
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Post
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/previous")
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -216,18 +196,15 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun seekToPosition(positionMs: Int, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/seek",
-            parameters = buildMap {
-                put("position_ms", positionMs.toString())
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/seek")
+            parameter("position_ms", positionMs.toString())
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -238,18 +215,15 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun setRepeatMode(repeatState: RepeatState, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/repeat",
-            parameters = buildMap {
-                put("state", Json.encodeToString(RepeatState.serializer(), repeatState).replace("\"", ""))
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/repeat")
+            parameter("state", Json.encodeToString(RepeatState.serializer(), repeatState).replace("\"", ""))
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -263,18 +237,15 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             return HttpStatusCode.BadRequest
         }
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/volume",
-            parameters = buildMap {
-                put("volume_percent", volumePercent.toString())
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/volume")
+            parameter("volume_percent", volumePercent.toString())
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -285,18 +256,15 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun toggleShufflePlayback(shuffleState: Boolean, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Put,
-            url = ktify.requestHelper.baseUrl + "me/player/shuffle",
-            parameters = buildMap {
-                put("state", shuffleState.toString())
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Put
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/shuffle")
+            parameter("state", shuffleState.toString())
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
@@ -315,45 +283,39 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             return null
         }
         if (ktify.requestHelper.makeRequest(
-                httpMethod = HttpMethod.Get,
-                url = ktify.requestHelper.baseUrl + "me/player/recently-played",
-                parameters = buildMap {
-                    if (limit != null && limit in 1..50) {
-                        put("limit", limit.toString())
-                    }
-                    if (after != null) {
-                        put("after", after.toString())
-                    }
-                    if (before != null) {
-                        put("before", before.toString())
-                    }
-                },
-                headers = null,
-                body = null,
                 requiresScope = Scope.USER_READ_RECENTLY_PLAYER
-            ) != HttpStatusCode.OK
+            ) {
+                method = HttpMethod.Get
+                url.takeFrom(ktify.requestHelper.baseUrl + "me/player/recently-played")
+                if (limit != null && limit in 1..50) {
+                    parameter("limit", limit.toString())
+                }
+                if (after != null) {
+                    parameter("after", after.toString())
+                }
+                if (before != null) {
+                    parameter("before", before.toString())
+                }
+            } != HttpStatusCode.OK
         ) {
             return null
         }
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Get,
-            url = ktify.requestHelper.baseUrl + "me/player/recently-played",
-            parameters = buildMap {
-                if (limit != null && limit in 1..50) {
-                    put("limit", limit.toString())
-                }
-                if (after != null) {
-                    put("after", after.toString())
-                }
-                if (before != null) {
-                    put("before", before.toString())
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_READ_RECENTLY_PLAYER,
-            requiresAuthentication = true,
-        )
+            requiresAuthentication = true
+        ) {
+            method = HttpMethod.Get
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/recently-played")
+            if (limit != null && limit in 1..50) {
+                parameter("limit", limit.toString())
+            }
+            if (after != null) {
+                parameter("after", after.toString())
+            }
+            if (before != null) {
+                parameter("before", before.toString())
+            }
+        }
     }
 
     /**
@@ -361,18 +323,15 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      */
     suspend fun addItemToQueue(uri: String, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
-            httpMethod = HttpMethod.Post,
-            url = ktify.requestHelper.baseUrl + "me/player/queue",
-            parameters = buildMap {
-                put("uri", uri)
-                if (deviceId != null) {
-                    put("device_id", deviceId)
-                }
-            },
-            headers = null,
-            body = null,
             requiresScope = Scope.USER_MODIFY_PLAYBACK_STATE
-        )
+        ) {
+            method = HttpMethod.Post
+            url.takeFrom(ktify.requestHelper.baseUrl + "me/player/queue")
+            parameter("uri", uri)
+            if (deviceId != null) {
+                parameter("device_id", deviceId)
+            }
+        }
     }
 
     /**
