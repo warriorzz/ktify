@@ -26,6 +26,8 @@ object KtifyObjectSerializer : JsonContentPolymorphicSerializer<KtifyObject>(Kti
             "album" -> Album.serializer()
             "artist" -> Artist.serializer()
             "user" -> PublicUser.serializer()
+            "episode" -> Episode.serializer()
+            "show" -> Show.serializer()
             else -> RawKtifyObject.serializer()
         }
     }
