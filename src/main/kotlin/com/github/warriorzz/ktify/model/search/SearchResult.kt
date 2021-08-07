@@ -2,7 +2,6 @@ package com.github.warriorzz.ktify.model.search
 
 import com.github.warriorzz.ktify.model.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
 
 @Serializable
 data class SearchResult(
@@ -10,6 +9,6 @@ data class SearchResult(
     val episodes: EpisodePagingObject? = null,
     val albums: AlbumPagingObject? = null,
     val artists: ArtistPagingObject? = null,
-    val shows: JsonObject? = null, // TODO
+    val shows: ShowPagingObject? = null,
     val users: UserPagingObject? = null,
 )
