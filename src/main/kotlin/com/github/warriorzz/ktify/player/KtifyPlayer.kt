@@ -130,9 +130,12 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
                     put("context_uri", contextUri)
                 }
                 uris?.let {
-                    put("uris", buildJsonArray {
-                        uris.forEach { add(Json.parseToJsonElement(it)) }
-                    })
+                    put(
+                        "uris",
+                        buildJsonArray {
+                            uris.forEach { add(Json.parseToJsonElement(it)) }
+                        }
+                    )
                 }
                 offset?.let {
                     put("offset", offset)

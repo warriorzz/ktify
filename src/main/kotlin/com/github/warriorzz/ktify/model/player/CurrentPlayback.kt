@@ -4,7 +4,6 @@ import com.github.warriorzz.ktify.model.Episode
 import com.github.warriorzz.ktify.model.Track
 import com.github.warriorzz.ktify.model.TrackActions
 import com.github.warriorzz.ktify.model.util.Context
-import com.github.warriorzz.ktify.model.util.Device
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -54,7 +53,6 @@ class CurrentPlayingTrack(
     val actions: TrackActions,
     val resuming: Boolean? = null
 ) : CurrentPlayback()
-
 
 @Serializable
 class CurrentPlayingEpisode(
@@ -128,5 +126,4 @@ object AnyAsEmptyStringSerializer : KSerializer<Any> {
     override fun serialize(encoder: Encoder, value: Any) {
         encoder.encodeString("")
     }
-
 }

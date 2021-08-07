@@ -3,7 +3,7 @@ package com.github.warriorzz.ktify.search
 import com.github.warriorzz.ktify.Ktify
 import com.github.warriorzz.ktify.model.search.SearchResult
 import com.github.warriorzz.ktify.model.util.ObjectType
-import io.ktor.http.*
+import io.ktor.http.HttpMethod
 import kotlinx.serialization.json.Json
 
 /**
@@ -34,7 +34,7 @@ suspend fun Ktify.searchItem(
             put("type", types.map { Json.encodeToString(ObjectType.serializer(), it) }.reduce { acc, it -> "$acc,$it" }.replace("\"", ""))
             put("limit", if (limit in 1..50) limit.toString() else "20")
             put("offset", if (offset + limit <= 1000 && offset >= 0) offset.toString() else "0")
-            if (includeExternal != null){
+            if (includeExternal != null) {
                 put("include_external", includeExternal.toString())
             }
             if (market != null) {

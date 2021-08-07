@@ -30,5 +30,4 @@ enum class Scope(val value: String) {
 
     USER_READ_EMAIL("user-read-email"),
     USER_READ_PRIVATE("user-read-private"),
-
 }

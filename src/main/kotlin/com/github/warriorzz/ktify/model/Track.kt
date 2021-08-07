@@ -5,7 +5,6 @@ import com.github.warriorzz.ktify.model.external.ExternalUrl
 import com.github.warriorzz.ktify.model.util.ObjectType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
 
 /**
  *  The album object of the <a href=https://developer.spotify.com/documentation/web-api/reference/#object-simplifiedtrackobject>Spotify Web API</a>.

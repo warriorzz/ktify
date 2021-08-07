@@ -23,7 +23,7 @@ suspend fun ClientCredentials.refresh() {
     if (accessTokenExpiryStamp == null || accessTokenExpiryStamp ?: return < System.currentTimeMillis()) {
         val newCredentials: ClientCredentialsResponse =
             Ktify.httpClient.post("https://accounts.spotify.com/api/token") {
-                body = "grant_type=refresh_token&refresh_token=${refreshToken}"
+                body = "grant_type=refresh_token&refresh_token=$refreshToken"
                 header("Authorization", "Basic ${"$clientId:$clientSecret".base64encode()}")
                 header("Content-Type", "application/x-www-form-urlencoded")
             }

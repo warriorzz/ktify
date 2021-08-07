@@ -40,5 +40,4 @@ object HttpStatusCodeSerializer : KSerializer<HttpStatusCode> {
     override fun serialize(encoder: Encoder, value: HttpStatusCode) {
         encoder.encodeInt(value.value)
     }
-
 }

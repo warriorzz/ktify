@@ -4,7 +4,7 @@ import com.github.warriorzz.ktify.Ktify
 import com.github.warriorzz.ktify.model.auth.ClientCredentials
 import com.github.warriorzz.ktify.model.auth.Scope
 import com.github.warriorzz.ktify.model.auth.refresh
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*

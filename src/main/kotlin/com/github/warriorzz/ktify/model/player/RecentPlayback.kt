@@ -20,6 +20,6 @@ class PlayHistoryCursorPagingObject(
     val href: String,
     val items: List<PlayHistoryObject>,
     val limit: Int,
-    val next : String? = null,
+    val next: String? = null,
     val total: Int,
 )

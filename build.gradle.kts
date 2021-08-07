@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.5.21"
     kotlin("plugin.serialization") version "1.5.20"
+    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
     id("org.jetbrains.dokka") version "1.5.0"
 }
 
@@ -52,5 +53,15 @@ tasks {
                 }
             }
         }
+    }
+}
+
+ktlint {
+    verbose.set(true)
+    filter {
+        disabledRules.add("no-wildcard-imports")
+        disabledRules.add("no-multi-spaces")
+
+        exclude("**/build/**")
     }
 }

@@ -25,7 +25,6 @@ data class Artist(
     val uri: String,
 ) : KtifyObject()
 
-
 @Serializable
 data class ArtistPagingObject(
     val href: String,
