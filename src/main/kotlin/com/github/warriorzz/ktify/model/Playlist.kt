@@ -54,17 +54,16 @@ sealed class PlaylistTrackObject {
      *  Get the instance as a PlaylistTrack object
      *  @return Null if the instance is an PlaylistTrackRef
      */
-    fun asPlaylistTrack() : PlaylistTrack? = if (this is PlaylistTrack) this else null
+    fun asPlaylistTrack(): PlaylistTrack? = if (this is PlaylistTrack) this else null
 
     /**
      *  Get the instance as a PlaylistTrackRef object
      *  @return Null if the instance is an PlaylistTrack
      */
-    fun asPlaylistTrackRef() : PlaylistTrackRef? = if (this is PlaylistTrackRef) this else null
-
+    fun asPlaylistTrackRef(): PlaylistTrackRef? = if (this is PlaylistTrackRef) this else null
 }
 
-object PlaylistTrackObjectSerializer: JsonContentPolymorphicSerializer<PlaylistTrackObject>(PlaylistTrackObject::class) {
+object PlaylistTrackObjectSerializer : JsonContentPolymorphicSerializer<PlaylistTrackObject>(PlaylistTrackObject::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out PlaylistTrackObject> {
         return if (element.jsonObject["track"] != null) PlaylistTrack.serializer() else PlaylistTrackRef.serializer()
     }
