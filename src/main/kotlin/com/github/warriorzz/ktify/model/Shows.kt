@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Show(
+data class Show(
     @SerialName("available_markets")
     val availableMarkets: List<String>,
     val copyrights: List<Copyright>,

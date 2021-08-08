@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
  *  @see <a href=https://developer.spotify.com/documentation/web-api/reference/#object-trackobject>Spotify reference</a>
  */
 @Serializable
-class Track(
+data class Track(
     val album: Album? = null,
     val artists: List<Artist>,
     @SerialName("available_markets")

@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
-class Episode(
+data class Episode(
     @SerialName("audio_preview_url")
     val audioPreviewUrl: String? = null,
     val description: String,
