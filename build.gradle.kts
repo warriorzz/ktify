@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.5.0"
 }
 
-group = "com.github.warriorzz"
+group = "io.github.warriorzz"
 version = "1.0-SNAPSHOT"
 
 repositories {
