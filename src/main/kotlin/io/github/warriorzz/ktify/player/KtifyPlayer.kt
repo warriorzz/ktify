@@ -49,7 +49,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Transfer playback to another device
      *  @param  deviceId    The ID of the device to which the playback should be transferred
      *  @param  play        If true, the playback will start, if false or not provided, the current playback state will be kept
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun transferPlayback(deviceId: String, play: Boolean = false): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -98,7 +98,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     /**
      *  Start or resume the user's playback, click [here](https://developer.spotify.com/documentation/web-api/reference/#category-player) for further context
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun startPlayback(
         deviceId: String? = null,
@@ -140,7 +140,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     /**
      *  Pause the user's playback
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun pausePlayback(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -157,7 +157,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     /**
      *  Skip the user's playback to the next track
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun skipToNextTrack(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -174,7 +174,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
     /**
      *  Skip the user's playback to the previous track
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun skipToPreviousTrack(deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -192,7 +192,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Seek to a specific position in the user's playback
      *  @param  positionMs  The position in milliseconds. Must be positive, if it is greater than the songs length, the player will skip to the next song.
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun seekToPosition(positionMs: Int, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -211,7 +211,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Set the repeat mode of the user's player
      *  @param  repeatState   The repeat state, represented by the [RepeatState](https://github.com/warriorzz/ktify/blob/39a37be45a471a4e2530256340f6c00d6a8dc4cd/src/main/kotlin/com/github/warriorzz/ktify/model/player/CurrentPlayback.kt#L89) enum class
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun setRepeatMode(repeatState: RepeatState, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -230,7 +230,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Set the volume of the user's player
      *  @param  volumePercent   The volume percentage (must be a value from 0 to 100 inclusive.)
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.BadRequest] if the volume wasn't between 0 and 100,  [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.BadRequest] if the volume wasn't between 0 and 100,  [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun setVolume(volumePercent: Int, deviceId: String? = null): HttpStatusCode {
         if (volumePercent > 100 || volumePercent < 0) {
@@ -252,7 +252,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Set the shuffle state of the user's player
      *  @param  shuffleState   The new shuffle state
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun toggleShufflePlayback(shuffleState: Boolean, deviceId: String? = null): HttpStatusCode {
         return ktify.requestHelper.makeRequest(
@@ -338,7 +338,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Adds a track to the user's queue
      *  @param  track   The track to add to the queue
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun addItemToQueue(track: Track, deviceId: String?) = addItemToQueue(track.uri, deviceId)
 
@@ -346,7 +346,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Adds a track to the user's queue
      *  @param  track   The track to add to the queue
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun addItemToQueue(track: LinkedTrack, deviceId: String?) = addItemToQueue(track.uri, deviceId)
 
@@ -354,7 +354,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
      *  Adds an episode to the user's queue
      *  @param  episode   The episode to add to the queue
      *  @param  deviceId    The device ID, if not provided, the user's current active device is targeted
-     *  @return [HttpStatusCode.NoContent] if the the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
+     *  @return [HttpStatusCode.NoContent] if the request succeeded, [HttpStatusCode.NotFound] if the device was not found, [HttpStatusCode.Forbidden] if the user is non-premium
      */
     suspend fun addItemToQueue(episode: Episode, deviceId: String?) = addItemToQueue(episode.uri, deviceId)
 }
