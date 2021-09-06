@@ -66,3 +66,5 @@ ktlint {
         exclude("**/build/**")
     }
 }
+
+apply(from = "publishing.gradle.kts")
