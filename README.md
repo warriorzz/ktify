@@ -8,7 +8,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("com.github.warriorzz", "ktify", "0.1")
+    implementation("io.github.warriorzz", "ktify", "0.1")
 }
 ```
 
