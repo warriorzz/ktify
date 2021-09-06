@@ -5,6 +5,11 @@ apply(plugin = "org.jetbrains.dokka")
 val sonatypeUsername = project.findProperty("sonatypeUsername").toString()
 val sonatypePassword = project.findProperty("sonatypePassword").toString()
 
+val sourcesJar = tasks.register<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    from(project.extensions.getByName<SourceSetContainer>("sourceSets").named("main").get().allSource)
+}
+
 val javadocJar = tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
     val dokkaHtml = tasks.getByName("dokkaHtml")
@@ -26,9 +31,14 @@ val configurePublishing: PublishingExtension.() -> Unit = {
         }
     }
     publications {
-        filterIsInstance<MavenPublication>().forEach { publication ->
-            publication.artifact(javadocJar)
-            publication.pom {
+        create<MavenPublication>("maven") {
+            from(components["kotlin"])
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+            artifact(sourcesJar)
+            artifact(javadocJar)
+            pom {
                 name.set(project.name)
                 description.set("A coroutine based wrapper around the Spotify Web API, written in Kotlin.")
                 url.set("https://github.com/warriorzz/ktify")
@@ -64,8 +74,8 @@ val configurePublishing: PublishingExtension.() -> Unit = {
 }
 
 val configureSigning: SigningExtension.() -> Unit = {
-    val signingKey = findProperty("signingKey")?.toString()
-    val signingPassword = findProperty("signingPassword")?.toString()
+    val signingKey = project.findProperty("signingKey")?.toString()
+    val signingPassword = project.findProperty("signingPassword")?.toString()
     if (signingKey != null && signingPassword != null) {
         useInMemoryPgpKeys(
             String(java.util.Base64.getDecoder().decode(signingKey.toByteArray())),

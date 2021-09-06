@@ -1,6 +1,17 @@
 # ktify
 A coroutine based wrapper for the Spotify Web API written in Kotlin.
 
+The library is available on the Maven Central Repository. 
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation("com.github.warriorzz", "ktify", "0.1")
+}
+```
+
 ## Disclaimer
 
 <b>This project is WIP.</b> Nevertheless it can be used, although only a small part of the api is covered. If you discover a bug, feel free to open an [issue](https://github.com/warriorzz/ktify/issues/new/choose).
