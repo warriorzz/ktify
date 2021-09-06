@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish Docs
     needs: test
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !contains(github.event.commits[0].message, '[skip ci]')
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v2

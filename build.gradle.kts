@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.5.30"
     kotlin("plugin.serialization") version "1.5.20"
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
     id("org.jetbrains.dokka") version "1.5.0"
 }
 
 group = "io.github.warriorzz"
-version = "1.0-SNAPSHOT"
+version = "0.1"
 
 repositories {
     mavenCentral()
