@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.30"
-    kotlin("plugin.serialization") version "1.5.30"
-    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
-    id("org.jetbrains.dokka") version "1.5.0"
+    kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("org.jetbrains.dokka") version "1.5.30"
 }
 
 group = "io.github.warriorzz"
@@ -19,6 +19,7 @@ dependencies {
     implementation(platform("io.ktor:ktor-bom:1.6.3"))
     implementation("io.ktor", "ktor-client-okhttp")
     implementation("io.ktor", "ktor-client-serialization")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.3.0")
 
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.5.2")
     implementation("io.github.microutils", "kotlin-logging-jvm", "2.0.11")
@@ -65,6 +66,11 @@ ktlint {
 
         exclude("**/build/**")
     }
+}
+
+java {
+    // This avoids a Gradle warning
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 apply(from = "publishing.gradle.kts")
