@@ -283,7 +283,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             return null
         }
         if (ktify.requestHelper.makeRequest(
-                requiresScope = Scope.USER_READ_RECENTLY_PLAYER
+                requiresScope = Scope.USER_READ_RECENTLY_PLAYED
             ) {
                 method = HttpMethod.Get
                 url.takeFrom(ktify.requestHelper.baseUrl + "me/player/recently-played")
@@ -301,7 +301,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
             return null
         }
         return ktify.requestHelper.makeRequest(
-            requiresScope = Scope.USER_READ_RECENTLY_PLAYER,
+            requiresScope = Scope.USER_READ_RECENTLY_PLAYED,
             requiresAuthentication = true
         ) {
             method = HttpMethod.Get
