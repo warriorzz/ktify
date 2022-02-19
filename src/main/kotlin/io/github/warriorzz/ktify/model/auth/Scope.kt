@@ -6,7 +6,7 @@ enum class Scope(val value: String) {
 
     UGC_IMAGE_UPLOAD("ugc-image-upload"),
 
-    USER_READ_RECENTLY_PLAYER("user-read-recently-played"),
+    USER_READ_RECENTLY_PLAYED("user-read-recently-played"),
     USER_TOP_READ("user-top-read"),
     USER_READ_PLAYBACK_POSITION("user-read-playback-position"),
 
