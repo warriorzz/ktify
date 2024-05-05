@@ -63,8 +63,8 @@ val configurePublishing: PublishingExtension.() -> Unit = {
                 developers {
                     developer {
                         name.set("Bjarne Eberhardt")
-                        email.set("warriormayer@gmail.com")
-                        url.set("https://warriorzz.github.io")
+                        email.set("bjar@gmx.de")
+                        url.set("https://bjarn.ee")
                         timezone.set("Europe/Berlin")
                     }
                 }

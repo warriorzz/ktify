@@ -1,36 +1,36 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.20"
-    kotlin("plugin.serialization") version "1.7.20"
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
-    id("org.jetbrains.dokka") version "1.7.20"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.serialization") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
-group = "io.github.warriorzz"
+group = "ee.bjarn"
 version = "0.1"
 
 repositories {
     mavenCentral()
-    maven("https://schlaubi.jfrog.io/artifactory/envconf/")
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:1.6.8"))
+    implementation(platform("io.ktor:ktor-bom:2.3.10"))
     implementation("io.ktor", "ktor-client-okhttp")
-    implementation("io.ktor", "ktor-client-serialization")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.4.1")
+    implementation("io.ktor", "ktor-serialization-kotlinx-json")
+    implementation("io.ktor", "ktor-client-content-negotiation")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.6.3")
 
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.6.4")
-    implementation("io.github.microutils", "kotlin-logging-jvm", "2.1.23")
-    implementation("org.slf4j", "slf4j-simple", "1.7.36")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.8.0")
+    implementation("io.github.microutils", "kotlin-logging-jvm", "3.0.5")
+    implementation("org.slf4j", "slf4j-simple", "2.0.13")
 }
 
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "11"
-            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+            freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
         }
     }
     dokkaHtml {
