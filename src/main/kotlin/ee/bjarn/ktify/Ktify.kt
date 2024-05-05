@@ -30,8 +30,8 @@ import mu.KotlinLogging
 class Ktify(
     private val clientCredentials: ClientCredentials
 ) {
-    val logger = KotlinLogging.logger {}
-    val requestHelper = RequestHelper(clientCredentials, this)
+    internal val logger = KotlinLogging.logger {}
+    internal val requestHelper = RequestHelper(clientCredentials, this)
     val player = KtifyPlayer(this)
 
     /**
