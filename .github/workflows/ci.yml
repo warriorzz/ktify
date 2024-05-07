@@ -108,8 +108,10 @@ jobs:
       - name: Build Dokka Docs with Gradle
         run: ./gradlew dokkaHtml
 
-      - name: Deploy Docs to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: build/dokka/html
+          path: 'build/dokka/html'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
