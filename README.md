@@ -8,7 +8,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("ee.bjarn", "ktify", "0.1")
+    implementation("ee.bjarn", "ktify", "0.1.1")
 }
 ```
 
