@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
  *  @param  types   The types of the searched items
  *  @param  limit   The limit of search results per category, must be between 1 and 50, otherwise it will be 20
  *  @param  offset  The offset, maximum is 1000 (including the limit)
- *  @param  includeExternal Weather to include external hosted audio or not
+ *  @param  includeExternal Whether to include external hosted audio or not
  *  @param  market  (Optional) [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code of a country. Can also be 'from_token', equivalent to the current users country.
  *  @param  queue   The queue for searching items
  *  @return The search results as a SearchResult
@@ -124,7 +124,7 @@ class SearchQueueBuilder {
 /**
  *  The class representing a part of a search queue
  *  @param  value   The keyword
- *  @param  explicit    Weather the keyword should be an exact match
+ *  @param  explicit    Whether the keyword should be an exact match
  */
 open class Phrase(val value: String, private val explicit: Boolean = false) {
     /**

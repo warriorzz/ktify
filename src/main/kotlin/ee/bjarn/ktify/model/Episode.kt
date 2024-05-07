@@ -41,17 +41,6 @@ data class Episode(
 ) : KtifyObject()
 
 @Serializable
-data class EpisodePagingObject(
-    val href: String,
-    val items: List<Episode>,
-    val limit: Int,
-    val next: String? = null,
-    val offset: Int,
-    val previous: String? = null,
-    val total: Int,
-)
-
-@Serializable
 data class SavedEpisodeObject(
     @SerialName("added_at")
     val addedAt: String,

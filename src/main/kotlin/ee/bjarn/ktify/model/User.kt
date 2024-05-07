@@ -40,17 +40,6 @@ data class PublicUser(
 ) : KtifyObject()
 
 @Serializable
-data class UserPagingObject(
-    val href: String,
-    val items: List<PublicUser>,
-    val limit: Int,
-    val next: String? = null,
-    val offset: Int,
-    val previous: String? = null,
-    val total: Int,
-)
-
-@Serializable
 data class ExplicitContentSettings(
     @SerialName("filter_enabled")
     val filterEnabled: Boolean,

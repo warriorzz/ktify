@@ -2,10 +2,10 @@ package ee.bjarn.ktify.player
 
 import ee.bjarn.ktify.Ktify
 import ee.bjarn.ktify.model.Episode
-import ee.bjarn.ktify.model.LinkedTrack
 import ee.bjarn.ktify.model.Track
 import ee.bjarn.ktify.model.auth.Scope
 import ee.bjarn.ktify.model.player.*
+import ee.bjarn.ktify.model.track.LinkedTrack
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.*

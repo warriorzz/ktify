@@ -64,7 +64,7 @@ sealed class PlaylistTrackObject {
 }
 
 object PlaylistTrackObjectSerializer : JsonContentPolymorphicSerializer<PlaylistTrackObject>(PlaylistTrackObject::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out PlaylistTrackObject> {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<PlaylistTrackObject> {
         return if (element.jsonObject["track"] != null) PlaylistTrack.serializer() else PlaylistTrackRef.serializer()
     }
 }

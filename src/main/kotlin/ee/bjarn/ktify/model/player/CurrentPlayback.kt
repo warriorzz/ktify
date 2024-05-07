@@ -2,7 +2,7 @@ package ee.bjarn.ktify.model.player
 
 import ee.bjarn.ktify.model.Episode
 import ee.bjarn.ktify.model.Track
-import ee.bjarn.ktify.model.TrackActions
+import ee.bjarn.ktify.model.track.TrackActions
 import ee.bjarn.ktify.model.util.Context
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -94,7 +94,7 @@ class CurrentPlaybackNull(
 ) : CurrentPlayback()
 
 object CurrentPlaybackSerializer : JsonContentPolymorphicSerializer<CurrentPlayback>(CurrentPlayback::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out CurrentPlayback> {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<CurrentPlayback> {
         return when (element.jsonObject["item"]?.jsonObject?.get("type")?.jsonPrimitive?.content) {
             "track" -> CurrentPlayingTrack.serializer()
             "episode" -> CurrentPlayingEpisode.serializer()
