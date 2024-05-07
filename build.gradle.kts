@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -5,10 +8,11 @@ plugins {
     kotlin("plugin.serialization") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jetbrains.dokka") version "1.9.20"
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 group = "ee.bjarn"
-version = "0.1"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -57,6 +61,51 @@ tasks {
     }
 }
 
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+
+    coordinates(project.group.toString(), project.name, project.version.toString())
+
+    configure(KotlinJvm(
+        javadocJar = JavadocJar.Dokka("dokkaHtml"),
+        sourcesJar = true
+    ))
+
+    pom {
+        name.set(project.name)
+        description.set("A coroutine based wrapper around the Spotify Web API, written in Kotlin.")
+        url.set("https://github.com/warriorzz/ktify")
+        inceptionYear.set("2021")
+
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://github.com/warriorzz/ktify/blob/main/LICENSE")
+            }
+        }
+
+        issueManagement {
+            system.set("GitHub")
+            url.set("https://github.com/warriorzz/ktify/issues")
+        }
+
+        scm {
+            connection.set("https://github.com/warriorzz/ktify.git")
+            url.set("https://github.com/warriorzz/ktify")
+        }
+
+        developers {
+            developer {
+                name.set("Bjarne Eberhardt")
+                email.set("bjar@gmx.de")
+                url.set("https://bjarn.ee")
+                timezone.set("Europe/Berlin")
+            }
+        }
+    }
+}
+
 ktlint {
     verbose.set(true)
     filter {
@@ -72,5 +121,3 @@ java {
     // This avoids a Gradle warning
     sourceCompatibility = JavaVersion.VERSION_11
 }
-
-apply(from = "publishing.gradle.kts")

@@ -21,6 +21,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
+import java.util.UUID
 
 /**
  *  The main wrapper class
@@ -84,24 +85,34 @@ class Ktify(
 }
 
 /**
- *  The builder for the [Ktify] class
+ *  The builder for the [Ktify] class. Currently designed for single use.
  *  @param  clientId    The client ID, provided by the spotify dashboard
  *  @param  clientSecret    The client secret, provided by the spotify dashboard
- *  @param  authorizationCode   returned by the request to the user
  *  @param  redirectUri Your redirect URI (just for confirmation)
  */
 class KtifyBuilder(
     private val clientId: String,
     private val clientSecret: String,
-    private val authorizationCode: String,
     private val redirectUri: String,
 ) {
+    private val state = UUID.randomUUID().toString().replace("-", "")
 
     /**
+     *  @param  scopes  List of scopes required by the application
+     *  @returns  The Spotify Authorization URL
+    */
+    fun getAuthorisationURL(scopes: List<Scope>): String {
+        val baseUrl = "https://accounts.spotify.com/authorize"
+        val scopesString = if (scopes.size > 0) scopes.map { it.value + "%20" }.reduce { acc, s -> acc + s }.dropLast(3) else "none"
+        return "$baseUrl?client_id=&scope=$scopesString&redirect_uri=$redirectUri&state=$state&response_type=code"
+    }
+
+    /**
+     *  @param  authorizationCode returned by the request to the user
      *  @return The [Ktify] instance
      */
     @OptIn(InternalAPI::class)
-    suspend fun build(): Ktify {
+    suspend fun build(authorizationCode: String): Ktify {
         val clientCredentialsResponse: ClientCredentialsResponse =
             ktifyHttpClient.post("https://accounts.spotify.com/api/token") {
                 header("Content-Type", "application/x-www-form-urlencoded")

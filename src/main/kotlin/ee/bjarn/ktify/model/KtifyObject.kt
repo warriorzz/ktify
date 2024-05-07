@@ -20,7 +20,7 @@ data class RawKtifyObject(
 ) : KtifyObject()
 
 object KtifyObjectSerializer : JsonContentPolymorphicSerializer<KtifyObject>(KtifyObject::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out KtifyObject> {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<KtifyObject> {
         return when (element.jsonObject["item"]?.jsonObject?.get("type")?.jsonPrimitive?.content) {
             "track" -> Track.serializer()
             "album" -> Album.serializer()
