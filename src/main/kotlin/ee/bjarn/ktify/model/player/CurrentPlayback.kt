@@ -2,7 +2,6 @@ package ee.bjarn.ktify.model.player
 
 import ee.bjarn.ktify.model.Episode
 import ee.bjarn.ktify.model.Track
-import ee.bjarn.ktify.model.track.TrackActions
 import ee.bjarn.ktify.model.util.Context
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -32,6 +31,8 @@ sealed class CurrentPlayback {
     @SerialName("repeat_state")
     abstract val repeatState: String?
     abstract val context: Context?
+
+    abstract val actions: CurrentPlaybackActions
 }
 
 @Serializable
@@ -49,8 +50,10 @@ class CurrentPlayingTrack(
     @SerialName("repeat_state")
     override val repeatState: String? = null,
     override val context: Context?,
+    override val actions: CurrentPlaybackActions,
+    @SerialName("smart_shuffle")
+    val smartShuffle: Boolean?,
     val item: Track? = null,
-    val actions: TrackActions,
     val resuming: Boolean? = null
 ) : CurrentPlayback()
 
@@ -69,8 +72,8 @@ class CurrentPlayingEpisode(
     @SerialName("repeat_state")
     override val repeatState: String? = null,
     override val context: Context?,
+    override val actions: CurrentPlaybackActions,
     val item: Episode? = null,
-    val actions: TrackActions,
     val resuming: Boolean? = null
 ) : CurrentPlayback()
 
@@ -90,8 +93,35 @@ class CurrentPlaybackNull(
     override val shuffleState: Boolean? = null,
     @SerialName("repeat_state")
     override val repeatState: String? = null,
-    override val context: Context?
+    override val context: Context?,
+    override val actions: CurrentPlaybackActions,
 ) : CurrentPlayback()
+
+@Serializable
+data class CurrentPlaybackActions(
+    val disallows: Disallows
+)
+
+@Serializable
+data class Disallows(
+    @SerialName("interrupting_playback")
+    val interruptingPlayback: Boolean? = null,
+    val pausing: Boolean? = null,
+    val resuming: Boolean? = null,
+    val seeking: Boolean? = null,
+    @SerialName("skipping_next")
+    val skippingNext: Boolean? = null,
+    @SerialName("skipping_prev")
+    val skippingPrev: Boolean? = null,
+    @SerialName("toggling_repeat_context")
+    val togglingRepeatContext: Boolean? = null,
+    @SerialName("toggling_shuffle")
+    val togglingShuffle: Boolean? = null,
+    @SerialName("toggling_repeat_track")
+    val togglingRepeatTrack: Boolean? = null,
+    @SerialName("transferring_playback")
+    val transferringPlayback: Boolean? = null,
+)
 
 object CurrentPlaybackSerializer : JsonContentPolymorphicSerializer<CurrentPlayback>(CurrentPlayback::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<CurrentPlayback> {

@@ -80,7 +80,7 @@ internal class RequestHelper(
         }
         if (requiresScope != null) { require(clientCredentials.scopes?.contains(requiresScope) ?: false) }
         val responseData: HttpResponse =
-            makeRequest(requiresAuthentication = true, client = ktify.jsonLessHttpClient, builder = builder)
+            makeRequest(requiresAuthentication = true, builder = builder)
         return responseData.status
     }
 

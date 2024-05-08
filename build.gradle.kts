@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "ee.bjarn"
-version = "0.1.1-hotfix"
+version = "0.1.2"
 
 repositories {
     mavenCentral()

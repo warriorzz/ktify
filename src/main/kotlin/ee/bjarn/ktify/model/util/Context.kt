@@ -35,4 +35,7 @@ enum class ObjectType {
 
     @SerialName("user")
     USER,
+
+    @SerialName("collection")
+    COLLECTION,
 }
