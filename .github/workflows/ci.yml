@@ -83,6 +83,11 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      actions: read
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !contains(github.event.commits[0].message, '[skip ci]')
     steps:
       - name: Fetch Sources
