@@ -21,6 +21,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
+import java.net.URLEncoder
 import java.util.UUID
 
 /**
@@ -103,8 +104,8 @@ class KtifyBuilder(
     */
     fun getAuthorisationURL(scopes: List<Scope>): String {
         val baseUrl = "https://accounts.spotify.com/authorize"
-        val scopesString = if (scopes.size > 0) scopes.map { it.value + "%20" }.reduce { acc, s -> acc + s }.dropLast(3) else "none"
-        return "$baseUrl?client_id=&scope=$scopesString&redirect_uri=$redirectUri&state=$state&response_type=code"
+        val scopesString = if (scopes.size > 0) scopes.map { it.value + " " }.reduce { acc, s -> acc + s }.dropLast(1) else "none"
+        return "$baseUrl?client_id=$clientId&scope=${URLEncoder.encode(scopesString, "UTF-8")}&redirect_uri=${URLEncoder.encode(redirectUri, "UTF-8")}&state=$state&response_type=code"
     }
 
     /**
