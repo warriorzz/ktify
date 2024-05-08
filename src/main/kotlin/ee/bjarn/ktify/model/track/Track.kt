@@ -44,19 +44,6 @@ data class SavedTrack(
 )
 
 @Serializable
-data class TrackActions(
-    @SerialName("is_playing")
-    val isPlaying: Boolean? = null,
-    val disallows: TrackActionsDisallows
-)
-
-@Serializable
-data class TrackActionsDisallows(
-    val pausing: Boolean? = null,
-    val resuming: Boolean? = null
-)
-
-@Serializable
 data class TrackRestriction(
     val reason: RestrictionType
 )

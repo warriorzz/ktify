@@ -20,5 +20,7 @@ data class Device(
     val name: String,
     val type: String,
     @SerialName("volume_percent")
-    val volumePercent: Int
+    val volumePercent: Int,
+    @SerialName("supports_volume")
+    val supportsVolume: Boolean,
 )

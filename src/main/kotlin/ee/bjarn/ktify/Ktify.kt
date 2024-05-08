@@ -23,6 +23,7 @@ import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
 import java.net.URLEncoder
 import java.util.UUID
+import kotlin.io.encoding.Base64
 
 /**
  *  The main wrapper class
@@ -112,14 +113,14 @@ class KtifyBuilder(
      *  @param  authorizationCode returned by the request to the user
      *  @return The [Ktify] instance
      */
-    @OptIn(InternalAPI::class)
+    @OptIn(InternalAPI::class, kotlin.io.encoding.ExperimentalEncodingApi::class)
     suspend fun build(authorizationCode: String): Ktify {
-        val clientCredentialsResponse: ClientCredentialsResponse =
-            ktifyHttpClient.post("https://accounts.spotify.com/api/token") {
-                header("Content-Type", "application/x-www-form-urlencoded")
-                body =
-                    "grant_type=authorization_code&client_id=$clientId&client_secret=$clientSecret&redirect_uri=$redirectUri&code=$authorizationCode"
-            }.body()
+        val clientCredentialsResponse: ClientCredentialsResponse = ktifyHttpClient.post("https://accounts.spotify.com/api/token") {
+            header("Content-Type", "application/x-www-form-urlencoded")
+            header("Authorization", "Basic ${Base64.encode("$clientId:$clientSecret".encodeToByteArray())}")
+            body =
+                "grant_type=authorization_code&redirect_uri=${URLEncoder.encode(redirectUri, "UTF-8")}&code=$authorizationCode"
+        }.body()
         return Ktify(
             ClientCredentials(
                 clientId,

@@ -112,6 +112,7 @@ class KtifyPlayer internal constructor(val ktify: Ktify) {
         ) {
             method = HttpMethod.Put
             url.takeFrom(ktify.requestHelper.baseUrl + "me/player/play")
+            header("Content-Type", "application/json")
             if (deviceId != null) {
                 parameter("device_id", deviceId)
             }
