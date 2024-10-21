@@ -3,6 +3,7 @@ package ee.bjarn.ktify
 import ee.bjarn.ktify.model.auth.ClientCredentials
 import ee.bjarn.ktify.model.auth.ClientCredentialsResponse
 import ee.bjarn.ktify.model.auth.Scope
+import ee.bjarn.ktify.model.auth.refresh
 import ee.bjarn.ktify.player.KtifyPlayer
 import ee.bjarn.ktify.utils.AuthenticationErrorObject
 import ee.bjarn.ktify.utils.AuthenticationException
@@ -84,6 +85,12 @@ class Ktify(
      *  Will be internal once the entire API is covered
      */
     val jsonLessHttpClient = HttpClient(httpClient.engine)
+
+    /**
+     *  Retrieve client credentials from the current [Ktify] instance
+     *  @return The [ClientCredentials] object
+     */
+    fun getClientCredentials() = clientCredentials
 }
 
 /**
@@ -107,6 +114,15 @@ class KtifyBuilder(
         val baseUrl = "https://accounts.spotify.com/authorize"
         val scopesString = if (scopes.size > 0) scopes.map { it.value + " " }.reduce { acc, s -> acc + s }.dropLast(1) else "none"
         return "$baseUrl?client_id=$clientId&scope=${URLEncoder.encode(scopesString, "UTF-8")}&redirect_uri=${URLEncoder.encode(redirectUri, "UTF-8")}&state=$state&response_type=code"
+    }
+
+    /**
+     *  @param  clientCredentials   Client credentials that were previously acquired
+     *  @return The [Ktify] instance
+     */
+    suspend fun fromClientCredentials(clientCredentials: ClientCredentials): Ktify {
+        clientCredentials.refresh()
+        return Ktify(clientCredentials)
     }
 
     /**

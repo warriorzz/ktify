@@ -8,6 +8,7 @@ import io.ktor.util.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class ClientCredentials(
     val clientId: String,
     val clientSecret: String,
