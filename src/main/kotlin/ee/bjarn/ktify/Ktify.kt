@@ -20,6 +20,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
+import io.ktor.utils.io.InternalAPI
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
 import java.net.URLEncoder

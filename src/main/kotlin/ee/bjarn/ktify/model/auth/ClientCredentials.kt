@@ -5,6 +5,7 @@ import ee.bjarn.ktify.utils.base64encode
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.util.*
+import io.ktor.utils.io.InternalAPI
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

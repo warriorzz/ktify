@@ -1,40 +1,41 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.serialization") version "1.9.23"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jetbrains.dokka") version "1.9.20"
     id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 group = "ee.bjarn"
-version = "0.1.3"
+version = "0.1.4"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(platform("io.ktor:ktor-bom:2.3.10"))
+    implementation(platform("io.ktor:ktor-bom:3.0.0"))
     implementation("io.ktor", "ktor-client-okhttp")
     implementation("io.ktor", "ktor-serialization-kotlinx-json")
     implementation("io.ktor", "ktor-client-content-negotiation")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.6.3")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.7.3")
 
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.8.0")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.9.0")
     implementation("io.github.microutils", "kotlin-logging-jvm", "3.0.5")
     implementation("org.slf4j", "slf4j-simple", "2.0.13")
 }
 
 tasks {
     withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.RequiresOptIn"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
         }
     }
     dokkaHtml {
